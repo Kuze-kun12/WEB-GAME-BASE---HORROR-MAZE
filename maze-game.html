@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horror Maze</title>
+    <!-- Import a horror-themed font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+
+    <div class="controls-info">
+        <p><strong>Controls:</strong> W A S D / Arrows. Press <span class="highlight">'E'</span> to take what you find.</p>
+        <p id="level-display">Descent: 1 / 6</p>
+        <p id="inventory-display">Carrying: [Nothing]</p>
+        <p id="stamina-display" style="display: none;">Stamina: 10 / 10</p>
+        <p id="lives-display" style="display: none;">Lives: ❤️ ❤️ ❤️</p>
+    </div>
+
+    <div class="game-container">
+        <h2>Horror maze</h2>
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <!-- JUMPSCARE ASSETS -->
+    <div id="jumpscare-screen">
+         <img src="./final/1.jpg" alt="THEY FOUND YOU">
+    </div>
+    <audio id="jumpscare-sound" src="./final/SOUND.mp3"></audio>
+    <audio id="level6-sound" src="./final/last_resort (1).mp3"></audio>
+
+    <!-- WHEEL SPINNER -->
+    <div id="wheel-container">
+        <h2 style="margin-bottom: 20px; color: #f1c40f;">FATE DECIDES</h2>
+        <div id="wheel"></div>
+        <div id="wheel-result"></div>
+    </div>
+
+    <!-- GAME COMPLETE SCREEN -->
+    <div id="death-screen">
+        <div class="overlay-card">
+            <h1>YOU DIED</h1>
+            <div class="heart-row">❤️ ❤️ ❤️</div>
+            <p>Respawning with remaining lives...</p>
+        </div>
+    </div>
+
+    <div id="final-screen">
+        <img id="final-screen-img" src="./final/win/endgame panels _)/Untitled58.png" alt="Win Image">
+        <h1>YOU WIN</h1>
+        <div class="heart-row">❤️ ❤️ ❤️</div>
+        <div class="credit-text">+1 CREDIT</div>
+        <p>Press <kbd>ENTER</kbd> to continue</p>
+    </div>
+
+    <div id="game-complete">
+        <h1>YOU ESCAPED</h1>
+        <p>Press ENTER to exit the dream.</p>
+    </div>
+
+    <!-- Link to external JavaScript files -->
+    <!-- DSA Concepts (InventoryStack class, level maps, pathfinding algorithm) -->
+    <script src="/functions/dsa-concepts.js"></script>
+    <!-- Game Logic (Main game engine, rendering, state management) -->
+    <script src="/functions/game.js"></script>
+    <!-- Debug Mode (Developer tools for testing) -->
+    <script src="/functions/debug.js"></script>
+
+</body>
+</html>

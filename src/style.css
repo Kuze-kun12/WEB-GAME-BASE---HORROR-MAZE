@@ -1,0 +1,363 @@
+/* ==========================================
+   HORROR MAZE - DREAD EDITION
+   STYLESHEET
+   ========================================== */
+
+body {
+    /* Pure black background for total darkness outside canvas */
+    background-color: #000000; 
+    color: #bdc3c7; /* Dim gray text */
+    font-family: 'Courier New', Courier, monospace; /* Gritty fallback font */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    /* Add some noise texture over everything for atmosphere */
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAAF4tNKAAAABJREFUeNrqwQEBAAAAgiD/Ch9fCRIAAAAAXmthZgAABU0AAAAASUVORK5CYII=');
+}
+
+h2 {
+    font-family: 'Creepster', system-ui; /* Horror font */
+    color: #820000; /* Dried blood red */
+    font-size: 3rem;
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 10px #ff0000;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+canvas {
+    background-color: #050505; /* Near pitch black game area */
+    border: 2px solid #330000; /* Dark red border */
+    box-shadow: 0 0 30px rgba(130, 0, 0, 0.5); /* Eerie glow */
+    cursor: none; /* Hide cursor over game */
+    transition: transform 0.05s ease-in-out;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    order: 2;
+    flex: 1;
+}
+
+.controls-info {
+    margin-top: 0;
+    text-align: left;
+    background: rgba(10, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #220000;
+    width: 250px;
+    flex-shrink: 0;
+    align-self: center;
+    height: fit-content;
+    order: 1;
+}
+
+.controls-info p { 
+    margin: 5px 0; 
+    font-size: 0.9rem;
+}
+
+.highlight { 
+    font-weight: bold; 
+}
+
+#stamina-display {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.green { 
+    color: #2ecc71; 
+    text-shadow: 0 0 5px #2ecc71;
+} /* Exit dim green */
+
+.red { 
+    color: #e74c3c; 
+    text-shadow: 0 0 5px #e74c3c;
+}   /* Enemy dim red */
+
+.yellow { 
+    color: #f1c40f; 
+    text-shadow: 0 0 5px #f1c40f;
+} /* Key dim yellow */
+
+/* ==========================================
+   JUMPSCARE SCREEN
+   ========================================== */
+#jumpscare-screen {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    background-color: black;
+    z-index: 9999;
+}
+
+#jumpscare-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ==========================================
+   WHEEL SPINNER OVERLAY
+   ========================================== */
+#wheel-container {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9998;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#wheel-container.active {
+    display: flex;
+}
+
+#wheel {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid #820000;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: spin 2s linear infinite;
+    box-shadow: 0 0 30px rgba(130, 0, 0, 0.7);
+    background: conic-gradient(#2ecc71 0deg 180deg, #e74c3c 180deg 360deg);
+}
+
+@keyframes spin {
+    from { 
+        transform: rotate(0deg); 
+    }
+    to { 
+        transform: rotate(360deg); 
+    }
+}
+
+#wheel.stopped {
+    animation: none;
+}
+
+#wheel-result {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    text-align: center;
+    min-height: 30px;
+    font-family: 'Creepster', system-ui;
+}
+
+.win { 
+    color: #2ecc71; 
+    text-shadow: 0 0 10px #2ecc71; 
+}
+
+.lose { 
+    color: #e74c3c; 
+    text-shadow: 0 0 10px #e74c3c; 
+}
+
+/* ==========================================
+   GAME COMPLETE SCREEN
+   ========================================== */
+#game-complete {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9997;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#game-complete.active {
+    display: flex;
+}
+
+#game-complete h1 {
+    font-family: 'Creepster', system-ui;
+    color: #2ecc71;
+    font-size: 3rem;
+    text-shadow: 0 0 20px #2ecc71;
+    margin-bottom: 20px;
+}
+
+#game-complete p {
+    color: #bdc3c7;
+    font-size: 1.2rem;
+}
+
+#death-screen,
+#final-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.96);
+    z-index: 9999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+#death-screen.active,
+#final-screen.active {
+    display: flex;
+}
+
+#death-screen .overlay-card,
+#final-screen {
+    color: #bdc3c7;
+}
+
+#death-screen h1,
+#final-screen h1 {
+    font-family: 'Creepster', system-ui;
+    color: #e74c3c;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px #e74c3c;
+}
+
+#final-screen h1 {
+    color: #2ecc71;
+    text-shadow: 0 0 20px #2ecc71;
+}
+
+#final-screen img {
+    max-width: 80%;
+    height: auto;
+    border: 4px solid #2ecc71;
+    border-radius: 12px;
+    box-shadow: 0 0 35px rgba(46, 204, 113, 0.45);
+    margin-bottom: 20px;
+}
+
+.heart-row {
+    font-size: 2.4rem;
+    margin: 15px 0;
+}
+
+.credit-text {
+    color: #f1c40f;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px #f1c40f;
+    margin-bottom: 20px;
+}
+
+#lives-display {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* ==========================================
+   DEBUG PANEL
+   ========================================== */
+#debug-panel {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(20, 20, 20, 0.95);
+    border: 2px solid #00ff00;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 0.85rem;
+    font-family: 'Courier New', monospace;
+    color: #00ff00;
+    max-width: 300px;
+    z-index: 8000;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.debug-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+    border-bottom: 1px solid #00ff00;
+    padding-bottom: 5px;
+}
+
+.debug-controls {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.debug-controls label {
+    color: #00ff00;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.debug-controls select,
+.debug-controls button {
+    background-color: #0d0d0d;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.debug-controls select option {
+    background-color: #1a1a1a;
+    color: #00ff00;
+}
+
+.debug-controls button:hover {
+    background-color: #00ff00;
+    color: #000000;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.debug-controls button:active {
+    transform: scale(0.95);
+}
+
+.debug-info {
+    background-color: rgba(0, 20, 0, 0.5);
+    border: 1px solid #00ff00;
+    padding: 8px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+}
+
+.debug-info p {
+    margin: 3px 0;
+    color: #00ff00;
+}
